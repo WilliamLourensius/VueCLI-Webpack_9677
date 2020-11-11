@@ -14,10 +14,10 @@
                  </v-text-field>
                  <v-spacer></v-spacer>
                   <v-select
-                    :items="['All Priority','Penting', 'Biasa', 'Tidak penting']"
-                    v-model="filters"
+                    :items="['Penting','Tidak penting']"
+                    v-model="sort"
                     label="Priority"
-                    @change="filterPriority"
+                    @change="sortedArray(sort)"
                     outlined
                     hide-details
                     class="mr-3"
@@ -26,7 +26,7 @@
                      Tambah
                  </v-btn>
             </v-card-title>    
-            <v-data-table :headers="headers" :items="filterPriority" :search="search"
+            <v-data-table :headers="headers" :items="todos" :search="search"
             :single-expand="singleExpand"
                 :expanded.sync="expanded"
                 item-key="note"
@@ -37,14 +37,14 @@
                 {{ item.note }}                        
                 </template>
                  <template v-slot:[`item.priority`]="{ item }">        
-                    <v-chip text-color="white" :color="warna(item.priority)">{{item.priority}}</v-chip>               
+                    <v-chip outlined  :color="warna(item.priority)">{{item.priority}}</v-chip>               
                 </template>
                 <template v-slot:[`item.actions`]="{item}">
-                    <v-btn small class="mr-2 primary" @click="editItem(item)">
-                      <span class="fa fa-pencil "></span>
+                    <v-btn icon small class="mr-2" @click="editItem(item)">
+                      <v-icon color="indigo">mdi-pencil</v-icon>
                     </v-btn>
-                    <v-btn small class="error" @click="deleteItem(item)">
-                         <span class="fa fa-close "></span>
+                    <v-btn icon small @click="deleteItem(item)">
+                         <v-icon color="red">mdi-delete</v-icon>
                     </v-btn>
                 </template>
             </v-data-table>
@@ -149,7 +149,7 @@ export default {
             dialog: false,
             dialogDel: false,
             dialogEd: false,    
-            filters:"All Priority",
+            sort:"unsort",
             singleExpand: false,        
             headers:[
                 {
@@ -235,20 +235,38 @@ export default {
                 note: null,
             };
         },
-    },
-     computed: {
-        filterPriority(){
-            let finds = this.filters;
-            if(finds == "All Priority"){
-                return this.todos;
-            }else {
-                var fil = this.todos.filter(function(filter){
-                    return filter.priority == finds;
-                })
-                return fil;
+        sortedArray: function(sort) {     
+      
+            if(sort == "Tidak penting"){          
+                function compare(a, b) {            
+                    if (a.priority == "Tidak penting")
+                        return -1;
+                    if (a.priority != "Tidak penting")
+                        return 1;
+                    if (a.priority == b.priority)
+                        return 0;      
+                        
+                }
+                return this.todos.sort(compare);
             }
+             if(sort == "Penting"){          
+                function compare(a, b) {            
+                    if (a.priority == "Penting")
+                        return -1;
+                    if (a.priority != "Penting")
+                        return 1;
+                    if (a.priority == b.priority)
+                        return 0;      
+                        
+                }
+                return this.todos.sort(compare);
+            }
+           
+              
+
+               
             
-        },
+  }
     }
 };
 </script>
