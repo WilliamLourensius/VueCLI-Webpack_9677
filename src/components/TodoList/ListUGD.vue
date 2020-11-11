@@ -20,7 +20,7 @@
                     @change="filterPriority"
                     outlined
                     hide-details
-                    class="mr-4"
+                    class="mr-3"
                     dense></v-select>
                  <v-btn color="success" dark @click="dialog = true">
                      Tambah
