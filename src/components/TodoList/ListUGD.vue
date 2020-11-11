@@ -16,7 +16,7 @@
                   <v-select
                     :items="['Penting','Tidak penting']"
                     v-model="sort"
-                    label="Priority"
+                    label="Urutkan"
                     @change="sortedArray(sort)"
                     outlined
                     hide-details
@@ -235,38 +235,33 @@ export default {
                 note: null,
             };
         },
-        sortedArray: function(sort) {     
-      
-            if(sort == "Tidak penting"){          
-                function compare(a, b) {            
-                    if (a.priority == "Tidak penting")
-                        return -1;
-                    if (a.priority != "Tidak penting")
-                        return 1;
-                    if (a.priority == b.priority)
-                        return 0;      
+       sortedArray: function(sort) {                                  
+                function compare(a,b) {                          
+                      if(sort == "Tidak penting"){           
+                        if (a.priority == "Tidak penting")
+                            return -1;                     
+                        if (a.priority == "Penting")
+                            return 1;                                           
+                        if (a.priority == "Biasa" && b.priority=="Tidak penting")
+                            return 1;                       
+                        if (a.priority == "Biasa" && b.priority=="Penting")
+                            return 0;
                         
+                                                                            
+                      }
+                      if(sort == "Penting"){
+                        if (a.priority == "Penting")
+                            return -1;
+                        if (a.priority == "Tidak penting")
+                            return 1;                                       
+                        if (a.priority == "Biasa" && b.priority=="Penting")
+                            return 1;                       
+                        if (a.priority == "Biasa" && b.priority=="Tidak penting")
+                            return 0;
+                      }                                            
                 }
-                return this.todos.sort(compare);
-            }
-             if(sort == "Penting"){          
-                function compare(a, b) {            
-                    if (a.priority == "Penting")
-                        return -1;
-                    if (a.priority != "Penting")
-                        return 1;
-                    if (a.priority == b.priority)
-                        return 0;      
-                        
-                }
-                return this.todos.sort(compare);
-            }
-           
-              
-
-               
-            
-  }
+                return this.todos.sort(compare);                                                       
+        }
     }
 };
 </script>
