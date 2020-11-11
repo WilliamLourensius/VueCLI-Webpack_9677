@@ -245,9 +245,7 @@ export default {
                         if (a.priority == "Biasa" && b.priority=="Tidak penting")
                             return 1;                       
                         if (a.priority == "Biasa" && b.priority=="Penting")
-                            return 0;
-                        
-                                                                            
+                            return 0;                                                                                                    
                       }
                       if(sort == "Penting"){
                         if (a.priority == "Penting")
