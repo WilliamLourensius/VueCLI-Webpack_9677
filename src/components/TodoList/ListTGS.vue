@@ -62,7 +62,7 @@
             <br>
             <v-list-item v-for="(item, i) in check" :key="i">
                     <v-list-item-content>
-                        <v-list-item-title>•  {{item.task}}</v-list-item-title>
+                        <v-list-item-title> - {{item.task}}</v-list-item-title>
                     </v-list-item-content>
             </v-list-item>
         </v-card>
